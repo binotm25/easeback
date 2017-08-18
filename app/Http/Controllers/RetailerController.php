@@ -48,6 +48,15 @@ class RetailerController extends Controller
         ], 200);
     }
 
+    public function getRetailer()
+    {
+        $retailer = $this->Retailer->select('balance')->where('user_id', $this->Auth->id)->first();
+        return response()->json([
+            'balance'   =>  $retailer->balance,
+            'status'    =>  1
+        ]);
+    }
+
     public function getSingleClient($id)
     {
         $single = $this->Retailer->find($id);

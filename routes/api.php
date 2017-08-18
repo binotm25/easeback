@@ -37,6 +37,7 @@ Route::group(['middleware'=>['auth:api', 'isVerified']], function(){
 
     Route::post('/getBanks', ['uses'=>'BankController@getBanks']);
 
+
     Route::prefix('manage')->group(function(){
 
         Route::group(['middleware' => ['admin']], function(){
@@ -56,6 +57,19 @@ Route::group(['middleware'=>['auth:api', 'isVerified']], function(){
             Route::get('/retailer/total', ['uses' => 'RetailerController@getTotal']);
             Route::get('/getRetailer/{id}', ['uses' => 'RetailerController@getSingleClient']);
         });
+    });
+
+    Route::group(['middleware'=>['retailer']], function() {
+        Route::get('/search/institute', ['uses' => 'InstituteController@getInstitutes']);
+        Route::get('/search/student', ['uses' => 'StudentController@getStudent']);
+
+        Route::get('/retailer/getRetailer', ['uses'=>'RetailerController@getRetailer']);
+    });
+
+    Route::prefix('student')->group(function(){
+
+        Route::post('payment', ['uses'=>'StudentController@payment']);
+
     });
 
 
